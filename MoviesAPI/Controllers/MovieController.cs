@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
 using MoviesAPI.Data.Dtos;
 using MoviesAPI.Models;
@@ -13,22 +14,18 @@ namespace MoviesAPI.Controllers
     public class MovieController : ControllerBase
     {
         private MovieContext _context;
+        private IMapper _mapper;
 
-        public MovieController(MovieContext context)
+        public MovieController(MovieContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost]
         public IActionResult AddMovie([FromBody] CreateMovieDto movieDto)
         {
-            Movie movie = new Movie
-            {
-                Title = movieDto.Title,
-                Genre = movieDto.Genre,
-                Duration = movieDto.Duration,
-                Director = movieDto.Director
-            };
+            Movie movie = _mapper.Map<Movie>(movieDto);
 
             _context.Movies.Add(movie);
             _context.SaveChanges();
@@ -48,14 +45,8 @@ namespace MoviesAPI.Controllers
 
             if (movie != null)
             {
-                ReadMovieDto readMovieDto = new ReadMovieDto
-                {
-                    Title = movie.Title,
-                    Genre = movie.Genre,
-                    Duration = movie.Duration,
-                    Director = movie.Director,
-                    GetTime = DateTime.Now
-                };
+                ReadMovieDto readMovieDto = _mapper.Map<ReadMovieDto>(movie);  
+
                 return Ok(movie);
             }
             return NotFound();
@@ -69,10 +60,7 @@ namespace MoviesAPI.Controllers
             {
                 return NotFound();
             }
-            movie.Title = movieDto.Title;
-            movie.Genre = movieDto.Genre;
-            movie.Duration = movieDto.Duration;
-            movie.Director = movieDto.Director;
+            _mapper.Map(movieDto, movie);  
             _context.SaveChanges();
             return NoContent();
         }
