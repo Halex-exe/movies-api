@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MoviesAPI.Models
+namespace MoviesAPI.Data.Dtos
 {
-    public class Movie
+    public class CreateMovieDto
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
         [Required(ErrorMessage = "Movie title is mandatory")]
         public string Title { get; set; }
         [Required(ErrorMessage = "Movie Director is mandatory")]

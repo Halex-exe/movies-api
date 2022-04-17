@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace MoviesAPI.Models
+namespace MoviesAPI.Data.Dtos
 {
-    public class Movie
+    public class ReadMovieDto
     {
         [Key]
         [Required]
@@ -14,5 +15,6 @@ namespace MoviesAPI.Models
         public string Genre { get; set; }
         [Range(1, 600, ErrorMessage = "Duration time range is between 1 and 600 minutes")]
         public int Duration { get; set; }
+        public DateTime GetTime { get; set; }
     }
 }
