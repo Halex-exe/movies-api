@@ -14,5 +14,6 @@ namespace MoviesAPI.Models
         public string Genre { get; set; }
         [Range(1, 600, ErrorMessage = "Duration time range is between 1 and 600 minutes")]
         public int Duration { get; set; }
+        public int AgeClassification { get; set; }
     }
 }

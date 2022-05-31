@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
-using MoviesAPI.Data.Dtos;
+using MoviesAPI.Data.Dtos.Movie;
 using MoviesAPI.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,10 +12,10 @@ namespace MoviesAPI.Controllers
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
-        private MovieContext _context;
+        private AppDbContext _context;
         private IMapper _mapper;
 
-        public MovieController(MovieContext context, IMapper mapper)
+        public MovieController(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -41,7 +40,7 @@ namespace MoviesAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMovieById(int id)
         {
-            Movie movie = _context.Movies.FirstOrDefault(filme => filme.Id == id);
+            Movie movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
             if (movie != null)
             {
@@ -53,9 +52,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AtualizaFilme(int id, [FromBody] UpdateMovieDto movieDto)
+        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto movieDto)
         {
-            Movie movie = _context.Movies.FirstOrDefault(filme => filme.Id == id);
+            Movie movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
             if (movie == null)
             {
                 return NotFound();
@@ -66,9 +65,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaFilme(int id)
+        public IActionResult RemoveMovie(int id)
         {
-            Movie movie = _context.Movies.FirstOrDefault(filme => filme.Id == id);
+            Movie movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
             if (movie == null)
             {
                 return NotFound();
