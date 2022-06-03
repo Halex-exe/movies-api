@@ -6,7 +6,6 @@ namespace MoviesAPI.Data.Dtos
     {
         [Required(ErrorMessage = "Cinema Name is mandatory")]
         public string Name { get; set; }
-        public int AddressFK { get; set; }
-        public int ManagerFK { get; set; }
+        public int AddressId { get; set; }
     }
 }
