@@ -12,7 +12,7 @@ namespace MoviesAPI.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Cinema Name is mandatory")]
         public string Name { get; set; }
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
         public int AddressId { get; set; }
     }
 }
