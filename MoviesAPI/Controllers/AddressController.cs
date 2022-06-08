@@ -23,49 +23,49 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdicionaEndereco([FromBody] CreateAddressDto enderecoDto)
+        public IActionResult AddAddress([FromBody] CreateAddressDto addressDto)
         {
-            Address address = _mapper.Map<Address>(enderecoDto);
+            Address address = _mapper.Map<Address>(addressDto);
             _context.Addresses.Add(address);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(RecuperaEnderecosPorId), new { Id = address.Id }, address);
+            return CreatedAtAction(nameof(GetAddressById), new { Id = address.Id }, address);
         }
 
         [HttpGet]
-        public IEnumerable<Address> RecuperaEnderecos()
+        public IEnumerable<Address> GetAddress()
         {
             return _context.Addresses;
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaEnderecosPorId(int id)
+        public IActionResult GetAddressById(int id)
         {
-            Address address = _context.Addresses.FirstOrDefault(endereco => endereco.Id == id);
+            Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
             if (address != null)
             {
-                ReadAddressDto enderecoDto = _mapper.Map<ReadAddressDto>(address);
+                ReadAddressDto addressDto = _mapper.Map<ReadAddressDto>(address);
 
-                return Ok(enderecoDto);
+                return Ok(addressDto);
             }
             return NotFound();
         }
 
         [HttpPut("{id}")]
-        public IActionResult AtualizaEndereco(int id, [FromBody] UpdateAddressDto enderecoDto)
+        public IActionResult UpdateAddress(int id, [FromBody] UpdateAddressDto addressDto)
         {
             Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
             if (address == null)
             {
                 return NotFound();
             }
-            _mapper.Map(enderecoDto, address);
+            _mapper.Map(addressDto, address);
             _context.SaveChanges();
             return NoContent();
         }
 
 
         [HttpDelete("{id}")]
-        public IActionResult DeletaEndereco(int id)
+        public IActionResult RemoveAddress(int id)
         {
             Address address = _context.Addresses.FirstOrDefault(address => address.Id == id);
             if (address == null)

@@ -32,7 +32,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Cinema> GetCinemas([FromQuery] string nomeDoFilme)
+        public IEnumerable<Cinema> GetCinemas()
         {
             return _context.Cinemas;
         }

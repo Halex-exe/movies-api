@@ -17,6 +17,11 @@ namespace MoviesAPI.Data
                 .HasOne(address => address.Cinema)
                 .WithOne(cinema => cinema.Address)
                 .HasForeignKey<Cinema>(cinema => cinema.AddressId);
+
+            builder.Entity<Cinema>()                                        // 1:n
+                .HasOne(cinema => cinema.Manager)
+                .WithMany(manager => manager.Cinemas)
+                .HasForeignKey(cinema => cinema.ManagerId);
         }
 
         public DbSet<Movie> Movies { get; set; }

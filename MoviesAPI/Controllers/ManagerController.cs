@@ -29,7 +29,7 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetManagerById), new { Id = manager.Id }, manager);   
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetManagerById(int id)
         {
             Manager manager = _context.Managers.FirstOrDefault(manager => manager.Id == id);
